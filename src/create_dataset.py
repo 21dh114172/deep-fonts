@@ -6,6 +6,9 @@ import string
 import numpy
 import sys
 
+from dotenv import load_dotenv
+load_dotenv()
+
 w, h = 64, 64
 w0, h0 = 256, 256
 
@@ -64,15 +67,15 @@ def read_font(fn):
     return numpy.array(data)
 
 
-def get_ttfs(d='scraper/fonts'):
+def get_ttfs(d=os.getenv("DATA_PATH") + '/scraper/fonts'):
     for dirpath, dirname, filenames in os.walk(d):
         for filename in filenames:
             if filename.endswith('.ttf') or filename.endswith('.otf'):
                 yield os.path.join(dirpath, filename)
 
                 
-f = h5py.File('fonts.hdf5', 'w')
-dset = f.create_dataset('fonts', (1, len(chars), h, w), chunks=(1, len(chars), h, w), maxshape=(None, len(chars), h, w), dtype='u1')
+f = h5py.File(os.getenv("DATA_PATH") + '/fonts.hdf5', 'w')
+dset = f.create_dataset(os.getenv("DATA_PATH") + '/fonts', (1, len(chars), h, w), chunks=(1, len(chars), h, w), maxshape=(None, len(chars), h, w), dtype='u1')
 
 i = 0
 for fn in get_ttfs(d=sys.argv[1]):

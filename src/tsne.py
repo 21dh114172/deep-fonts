@@ -3,8 +3,13 @@ from sklearn.manifold import TSNE
 from model import Model
 import numpy
 import PIL, PIL.Image, PIL.ImageOps
+import os
 
-f = h5py.File('fonts.hdf5', 'r')
+from dotenv import load_dotenv
+load_dotenv()
+
+
+f = h5py.File(os.getenv("DATA_PATH") + '/fonts.hdf5', 'r')
 data = f['fonts']
 n, k = data.shape[0], data.shape[1]
 wh = data.shape[2] * data.shape[3]

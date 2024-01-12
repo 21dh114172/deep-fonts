@@ -26,5 +26,4 @@ combined = numpy.zeros((2*k, 64 * 64))
 for z in xrange(k):
     combined[2*z] = data[batch_is[z]][z].flatten() * 1.0 / 255
     combined[2*z+1] = batch_pred[z]
-
-model.draw_grid(combined).save('real_vs_pred.png')
+model.draw_grid(combined).save('real_vs_pred2.png')

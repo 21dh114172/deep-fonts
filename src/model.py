@@ -11,6 +11,10 @@ from sklearn import cross_validation
 import math
 import PIL, PIL.Image
 
+from dotenv import load_dotenv
+load_dotenv()
+
+
 class OneHotLayer(lasagne.layers.Layer):
     def __init__(self, incoming, nb_class, **kwargs):
         super(OneHotLayer, self).__init__(incoming, **kwargs)
@@ -114,10 +118,10 @@ class Model(object):
         return train_set, test_set
 
 def get_data():
-    if not os.path.exists('fonts.hdf5'):
+    if not os.path.exists(os.getenv("DATA_PATH") + '/fonts.hdf5'):
         wget.download('https://s3.amazonaws.com/erikbern/fonts.hdf5')
 
-    f = h5py.File('fonts.hdf5', 'r')
+    f = h5py.File(os.getenv("DATA_PATH") + '/fonts.hdf5', 'r')
     return f['fonts']
 
 def draw_grid(data, cols=None):

@@ -2,8 +2,13 @@ import h5py, random, numpy
 import PIL, PIL.Image
 from scipy.ndimage import filters
 import random
+import os
 
-f = h5py.File('fonts.hdf5', 'r')
+from dotenv import load_dotenv
+load_dotenv()
+
+
+f = h5py.File(os.getenv("DATA_PATH") + '/fonts.hdf5', 'r')
 data = f['fonts']
 print data.shape
 
