@@ -17,13 +17,13 @@ for i, j in test_set:
 
 batch_is = numpy.zeros((k,), dtype=numpy.int32)
 batch_js = numpy.zeros((k,), dtype=numpy.int32)
-for z in xrange(k):
-    batch_is[z] = random.choice(chars[z]) # random.randint(0, n-1)
-    batch_js[z] = z
+for z in xrange(k): # k is 62, length of A-Za-z0-9
+    batch_is[z] = random.choice(chars[z]) # choose random font from test set
+    batch_js[z] = z # from A-Z a-z 0-9, a is 26
 
 batch_pred = run_fn(batch_is, batch_js)
 combined = numpy.zeros((2*k, 64 * 64))
 for z in xrange(k):
-    combined[2*z] = data[batch_is[z]][z].flatten() * 1.0 / 255
-    combined[2*z+1] = batch_pred[z]
+    combined[2*z] = data[batch_is[z]][z].flatten() * 1.0 / 255 # real font
+    combined[2*z+1] = batch_pred[z] # predict font
 model.draw_grid(combined).save('real_vs_pred2.png')
